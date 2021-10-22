@@ -115,7 +115,7 @@ const Event = () => {
                     ml={4}
                     onClick={() => sendData()}
                 >
-                    Add Todo
+                    Add
                 </Button>
             </InputGroup>
 

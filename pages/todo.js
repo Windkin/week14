@@ -31,9 +31,6 @@ const Event = () => {
     const [inputDate, setInputDate] = useState('')
     const [events, setEvents] = useState([])
 
-    // console.log(AuthUser)
-    // console.log(todos)
-
     useEffect(() => {
     AuthUser.id &&
       firebase
@@ -57,8 +54,7 @@ const Event = () => {
           }
         )
   })
-                          
-                        
+                                              
     const sendData = () => {
         try {
             // try to update doc

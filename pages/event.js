@@ -9,14 +9,16 @@ import {
     Text,
     IconButton,
     Divider,
-} from "@chakra-ui/react"
+    Link,
+} from "@chakra-ui/react";
+
 import DarkModeSwitch from '../components/DarkModeSwitch'
 import {
     useAuthUser,
     withAuthUser,
     withAuthUserTokenSSR,
     AuthAction,
-} from 'next-firebase-auth'
+} from 'next-firebase-auth';
 import getAbsoluteURL from '../utils/getAbsoluteURL'
 import { AddIcon, DeleteIcon, StarIcon } from "@chakra-ui/icons"
 import firebase from 'firebase/app'
@@ -25,30 +27,33 @@ import 'firebase/firestore'
 const Event = () => {
     const AuthUser = useAuthUser()
     const [inputName, setInputName] = useState('')
+    const [inputThing, setInputThing] = useState('')
     const [inputDate, setInputDate] = useState('')
     const [events, setEvents] = useState([])
 
     useEffect(() => {
-        AuthUser.id &&
-            firebase
-                .firestore()
-                .collection("events")
-                .where( 'user', '==', AuthUser.id )
-                .onSnapshot(
-                  snapshot => {
-                    setEvents(
-                      snapshot.docs.map(
-                        doc => {
-                          return {
-                            eventID: doc.id,
-                            eventName: doc.data().name,
-                            eventDate: doc.data().date.toDate().toDateString()
-                          }  
-                        }
-                      )
-                    );
-                })
-    })
+    AuthUser.id &&
+      firebase
+        .firestore()
+        .collection("events")
+        .where( 'user', '==', AuthUser.id )
+        .onSnapshot(
+          snapshot => {
+            setEvents(
+              snapshot.docs.map(
+                doc => {
+                  return {
+                    eventID: doc.id,
+                    eventName: doc.data().name,
+                    eventThing: doc.data().thing,
+                    eventDate: doc.data().date.toDate().toDateString()
+                  }
+                }
+              )
+            );
+          }
+        )
+  })
 
     const sendData = () => {
         try {
@@ -99,6 +104,7 @@ const Event = () => {
                     children={<AddIcon color="gray.300" />}
                 />
                 <Input type="text" value={inputName} onChange={(e) => setInputName(e.target.value)} placeholder="Event Title" />
+                
                 <Input type="date" value={inputDate} onChange={(e) => setInputDate(e.target.value)} placeholder="Event Title" />
                 <Button
                     ml={2}

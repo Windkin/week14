@@ -6,23 +6,24 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/icon": "^1.1.11",
-    "@chakra-ui/icons": "^1.0.15",
-    "@chakra-ui/react": "^1.6.8",
-    "@emotion/react": "^11.4.1",
+    "@chakra-ui/icon": "^1.1.12",
+    "@chakra-ui/icons": "^1.0.16",
+    "@chakra-ui/react": "^1.6.10",
+    "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
-    "firebase": "^8.9.1",
+    "firebase": "^8.10.0",
     "firebase-admin": "^9.11.0",
     "framer-motion": "^4.1.17",
     "next": "11.1.0",
     "next-absolute-url": "^1.2.2",
     "next-firebase-auth": "0.13.3",
-    "react": "17.0.2",
+    "react": "^17.0.2",
     "react-datepicker": "^4.2.1",
-    "react-dom": "17.0.2",
+    "react-dom": "^17.0.2",
     "react-firebaseui": "^5.0.2"
   },
   "devDependencies": {

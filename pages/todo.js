@@ -9,14 +9,16 @@ import {
     Text,
     IconButton,
     Divider,
-} from "@chakra-ui/react"
+    Link,
+} from "@chakra-ui/react";
+
 import DarkModeSwitch from '../components/DarkModeSwitch'
 import {
     useAuthUser,
     withAuthUser,
     withAuthUserTokenSSR,
     AuthAction,
-} from 'next-firebase-auth'
+} from 'next-firebase-auth';
 import getAbsoluteURL from '../utils/getAbsoluteURL'
 import { AddIcon, DeleteIcon, StarIcon } from "@chakra-ui/icons"
 import firebase from 'firebase/app'
@@ -33,30 +35,28 @@ const Event = () => {
     // console.log(todos)
 
     useEffect(() => {
-        AuthUser.id &&
-            firebase
-                .firestore()
-                .collection("events")
-                //.orderBy('timestamp', 'desc')
-                .where( 'user', '==', AuthUser.id )
-                .onSnapshot(
-                  snapshot => {
-                    setEvents(
-                      snapshot.docs.map(
-                        doc => {
-                          return {
-                            eventID: doc.id,
-                            eventName: doc.data().name,
-                            eventThing: doc.data().thing,
-                            eventDate: doc.data().date.toDate().toDateString()
-                          }
-                        }
-                      )
-                    );
+    AuthUser.id &&
+      firebase
+        .firestore()
+        .collection("events")
+        .where( 'user', '==', AuthUser.id )
+        .onSnapshot(
+          snapshot => {
+            setEvents(
+              snapshot.docs.map(
+                doc => {
+                  return {
+                    eventID: doc.id,
+                    eventName: doc.data().name,
+                    eventThing: doc.data().thing,
+                    eventDate: doc.data().date.toDate().toDateString()
                   }
-                )
-              }
-            )
+                }
+              )
+            );
+          }
+        )
+  })
                           
                         
     const sendData = () => {
@@ -164,4 +164,3 @@ export default withAuthUser({
     whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
     whenUnauthedBeforeInit: AuthAction.REDIRECT_TO_LOGIN,
 })(Event)
-

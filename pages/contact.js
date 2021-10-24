@@ -29,6 +29,8 @@ const Event = () => {
     const [inputName, setInputName] = useState('')
     const [inputThing, setInputThing] = useState('')
     const [inputDate, setInputDate] = useState('')
+    const [inputPhone, setInputPhone] = useState('')
+    const [inputEmail, setInputEmail] = useState('')
     const [events, setEvents] = useState([])
 
     useEffect(() => {
@@ -45,8 +47,9 @@ const Event = () => {
                   return {
                     eventID: doc.id,
                     eventName: doc.data().name,
+                    eventPhone: doc.data().phone,
+                    eventEmail: doc.data().email,
                     eventThing: doc.data().thing,
-                    eventDate: doc.data().date.toDate().toDateString()
                   }
                 }
               )
@@ -63,13 +66,15 @@ const Event = () => {
                 .collection("events") // all users will share one collection in this model
                 .add({
                   name: inputName,
-                  date: firebase.firestore.Timestamp.fromDate( new Date(inputDate) ),
+                  phone: inputPhone,
+                  email: inputEmail,
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                   user: AuthUser.id
                 })
                 .then(console.log('Data was successfully sent to cloud firestore!'));
               setInputName('');
-              setInputDate('');
+              setInputPhone('');
+              setInputEmail('');
         } catch (error) {
             console.log(error)
         }
@@ -103,9 +108,9 @@ const Event = () => {
                     pointerEvents="none"
                     children={<AddIcon color="gray.300" />}
                 />
-                <Input type="text" value={inputName} onChange={(e) => setInputName(e.target.value)} placeholder="Event Title" />
-                
-                <Input type="date" value={inputDate} onChange={(e) => setInputDate(e.target.value)} placeholder="Event Title" />
+                <Input type="text" value={inputName} onChange={(e) => setInputName(e.target.value)} placeholder="Name" />
+                <Input type="text" value={inputPhone} onChange={(e) => setInputPhone(e.target.value)} placeholder="(555) 555-5555" />
+                <Input type="text" value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} placeholder="Email" />
                 <Button
                     ml={2}
                     onClick={() => sendData()}
@@ -129,6 +134,8 @@ const Event = () => {
                             <Flex align="center">
                                 <Text fontSize="xl" mr={4}>{i + 1}.</Text>
                                 <Text>{item.eventName}&nbsp;</Text>
+                                <Text>{item.eventPhone}&nbsp;</Text>
+                                <Text>{item.eventEmail}&nbsp;</Text>
                                 <Text>{item.eventThing}&nbsp;</Text>
                                 <Text>{item.eventDate}</Text>
                             </Flex>

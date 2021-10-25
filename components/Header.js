@@ -27,6 +27,10 @@ const firebaseDependencyVersion =
 
 const Links = [
   {
+    label:'Home',
+    url:'../'
+  },
+  {
     label:'To Do',
     url:'/todo'
   },
@@ -52,9 +56,7 @@ const Header = ({ email, signOut }) => {
           
           <HStack spacing={8} alignItems={'center'}>
             <Box>
-              <Link href={'/'}>
-                Logo
-              </Link>
+              
             </Box>
             <HStack
               as={'nav'}

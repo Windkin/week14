@@ -3,16 +3,20 @@ import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'nex
 import { getFirebaseAdmin } from 'next-firebase-auth';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import Header from '../../components/Header'
 
 const SingleEvent = ({itemData}) => {
-  // const AuthUser = useAuthUser();
+  const AuthUser = useAuthUser();
   return (
     <>
-      <Flex>
-        <Heading>{itemData.name}</Heading>
-      </Flex>
-      <Flex>
-        <Text>{itemData.date}</Text>
+    <Header email={AuthUser.email} signOut={AuthUser.signOut} />
+      <Flex flexDir="column" maxW={800} align="center" justify="center" minH="100vh" m="auto" px={4}>
+        <Flex>
+          <Heading>{itemData.name}</Heading>
+        </Flex>
+        <Flex>
+          <Text>{itemData.date}</Text>
+        </Flex>
       </Flex>
     </>
   );

@@ -29,9 +29,9 @@ const Event = () => {
     const AuthUser = useAuthUser()
     const [inputName, setInputName] = useState('')
     const [inputThing, setInputThing] = useState('')
-    const [inputDate, setInputDate] = useState('')
     const [inputPhone, setInputPhone] = useState('')
     const [inputEmail, setInputEmail] = useState('')
+    const [inputDate, setInputDate] = useState('')
     const [events, setEvents] = useState([])
 
     useEffect(() => {
@@ -51,6 +51,7 @@ const Event = () => {
                     eventPhone: doc.data().phone,
                     eventEmail: doc.data().email,
                     eventThing: doc.data().thing,
+                    //eventDate: docData.date.toDate().toDateString()
                     //eventDate: doc.data().date.toDate().toDateString()
                     //this stopped working and was throwing an error like you got in your week 8 demonstration
                   }
@@ -69,13 +70,15 @@ const Event = () => {
                 .collection("events") // all users will share one collection in this model
                 .add({
                   name: inputName,
-                  date: firebase.firestore.Timestamp.fromDate( new Date(inputDate) ),
+                  phone: inputPhone,
+                  email: inputEmail,
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                   user: AuthUser.id
                 })
                 .then(console.log('Data was successfully sent to cloud firestore!'));
               setInputName('');
-              setInputDate('');
+              setInputPhone('');
+              setInputEmail('');
         } catch (error) {
             console.log(error)
         }
@@ -99,10 +102,10 @@ const Event = () => {
       <Header email={AuthUser.email} signOut={AuthUser.signOut} />
         <Flex flexDir="column" maxW={800} align="center" justify="center" minH="100vh" m="auto" px={4}>
             <Flex justify="space-between" w="100%" align="center">
-                <Heading mb={4}>Welcome, {AuthUser.email}!</Heading>
+              <Heading mb={4}>Welcome, {AuthUser.email}!</Heading>
                 <Flex>
-                    <DarkModeSwitch />
-                    <IconButton ml={2} onClick={AuthUser.signOut} icon={<StarIcon />} />
+                  <DarkModeSwitch />
+                  <IconButton ml={2} onClick={AuthUser.signOut} icon={<StarIcon />} />
                 </Flex>
             </Flex>
 
@@ -111,9 +114,9 @@ const Event = () => {
                     pointerEvents="none"
                     children={<AddIcon color="gray.300" />}
                 />
-                <Input type="text" value={inputName} onChange={(e) => setInputName(e.target.value)} placeholder="Event Title" />
-                
-                <Input type="date" value={inputDate} onChange={(e) => setInputDate(e.target.value)} placeholder="Event Title" />
+                <Input type="text" value={inputName} onChange={(e) => setInputName(e.target.value)} placeholder="Name" />
+                <Input type="text" value={inputPhone} onChange={(e) => setInputPhone(e.target.value)} placeholder="(555) 555-5555" />
+                <Input type="text" value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} placeholder="Email" />
                 <Button
                     ml={2}
                     onClick={() => sendData()}

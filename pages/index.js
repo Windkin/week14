@@ -21,7 +21,6 @@ const Demo = () => {
   return (
     <div>
       <Header email={AuthUser.email} signOut={AuthUser.signOut} />
-    
     </div>
   )
 }

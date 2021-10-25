@@ -23,12 +23,15 @@ import getAbsoluteURL from '../utils/getAbsoluteURL'
 import { AddIcon, DeleteIcon, StarIcon } from "@chakra-ui/icons"
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import Header from '../components/Header'
 
 const Event = () => {
     const AuthUser = useAuthUser()
     const [inputName, setInputName] = useState('')
     const [inputThing, setInputThing] = useState('')
     const [inputDate, setInputDate] = useState('')
+    const [inputPhone, setInputPhone] = useState('')
+    const [inputEmail, setInputEmail] = useState('')
     const [events, setEvents] = useState([])
 
     useEffect(() => {
@@ -45,8 +48,11 @@ const Event = () => {
                   return {
                     eventID: doc.id,
                     eventName: doc.data().name,
+                    eventPhone: doc.data().phone,
+                    eventEmail: doc.data().email,
                     eventThing: doc.data().thing,
-                    eventDate: doc.data().date.toDate().toDateString()
+                    //eventDate: doc.data().date.toDate().toDateString()
+                    //this stopped working and was throwing an error like you got in your week 8 demonstration
                   }
                 }
               )
@@ -92,6 +98,8 @@ const Event = () => {
     }
 
     return (
+      <>
+      <Header email={AuthUser.email} signOut={AuthUser.signOut} />
         <Flex flexDir="column" maxW={800} align="center" justify="center" minH="100vh" m="auto" px={4}>
             <Flex justify="space-between" w="100%" align="center">
                 <Heading mb={4}>Welcome, {AuthUser.email}!</Heading>
@@ -132,10 +140,16 @@ const Event = () => {
                             justifyContent="space-between"
                         >
                             <Flex align="center">
-                                <Text fontSize="xl" mr={4}>{i + 1}.</Text>
-                                <Text>{item.eventName}&nbsp;</Text>
-                                <Text>{item.eventThing}&nbsp;</Text>
-                                <Text>{item.eventDate}</Text>
+                              <Text fontSize="xl" mr={4}>{i + 1}.</Text>
+                                <Text>
+                                  <Link href={'/events/' + item.eventID}>
+                                    {item.eventName}&nbsp;
+                                    {item.eventPhone}&nbsp;
+                                    {item.eventEmail}&nbsp;
+                                    {item.eventThing}&nbsp;
+                                    {item.eventDate}
+                                  </Link>
+                                </Text>
                             </Flex>
                             <IconButton onClick={() => deleteEvent(item.eventID)} icon={<DeleteIcon />} />
                         </Flex>
@@ -143,6 +157,7 @@ const Event = () => {
                 )
             })}
         </Flex>
+      </>
     )
 }
 

@@ -29,12 +29,12 @@ const Event = () => {
     const AuthUser = useAuthUser()
     const [inputName, setInputName] = useState('')
     const [inputThing, setInputThing] = useState('')
+    const [inputDate, setInputDate] = useState('')
     const [inputPhone, setInputPhone] = useState('')
     const [inputEmail, setInputEmail] = useState('')
-    const [inputDate, setInputDate] = useState('')
     const [events, setEvents] = useState([])
 
-    useEffect(() => {
+ useEffect(() => {
     AuthUser.id &&
       firebase
         .firestore()
@@ -51,9 +51,7 @@ const Event = () => {
                     eventPhone: doc.data().phone,
                     eventEmail: doc.data().email,
                     eventThing: doc.data().thing,
-                    //eventDate: docData.date.toDate().toDateString()
-                    //eventDate: doc.data().date.toDate().toDateString()
-                    //this stopped working and was throwing an error like you got in your week 8 demonstration
+                    eventDate: doc.data().date.toDate().toDateString()
                   }
                 }
               )
@@ -73,6 +71,7 @@ const Event = () => {
                   phone: inputPhone,
                   email: inputEmail,
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                  date: firebase.firestore.Timestamp.fromDate( new Date() ),
                   user: AuthUser.id
                 })
                 .then(console.log('Data was successfully sent to cloud firestore!'));
@@ -102,10 +101,10 @@ const Event = () => {
       <Header email={AuthUser.email} signOut={AuthUser.signOut} />
         <Flex flexDir="column" maxW={800} align="center" justify="center" minH="100vh" m="auto" px={4}>
             <Flex justify="space-between" w="100%" align="center">
-              <Heading mb={4}>Welcome, {AuthUser.email}!</Heading>
+                <Heading mb={4}>Welcome, {AuthUser.email}!</Heading>
                 <Flex>
-                  <DarkModeSwitch />
-                  <IconButton ml={2} onClick={AuthUser.signOut} icon={<StarIcon />} />
+                    <DarkModeSwitch />
+                    <IconButton ml={2} onClick={AuthUser.signOut} icon={<StarIcon />} />
                 </Flex>
             </Flex>
 
@@ -138,7 +137,6 @@ const Event = () => {
                             justifyContent="space-between"
                         >
                             <Flex align="center">
-                              <Text fontSize="xl" mr={4}>{i + 1}.</Text>
                                 <Text>
                                   <Link href={'/events/' + item.eventID}>
                                     {item.eventName}&nbsp;

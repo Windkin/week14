@@ -51,7 +51,7 @@ const Event = () => {
                     eventPhone: doc.data().phone,
                     eventEmail: doc.data().email,
                     eventThing: doc.data().thing,
-                    //eventDate: doc.data().date.toDate().toDateString()
+                    eventDate: doc.data().date.toDate().toDateString()
                     //this stopped working and was throwing an error like you got in your week 8 demonstration
                   }
                 }
@@ -69,6 +69,9 @@ const Event = () => {
                 .collection("events") // all users will share one collection in this model
                 .add({
                   name: inputName,
+                  thing: [],
+                  email: [],
+                  phone: [],
                   date: firebase.firestore.Timestamp.fromDate( new Date(inputDate) ),
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                   user: AuthUser.id

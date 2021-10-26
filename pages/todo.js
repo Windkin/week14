@@ -34,7 +34,7 @@ const Event = () => {
     const [inputEmail, setInputEmail] = useState('')
     const [events, setEvents] = useState([])
 
-    useEffect(() => {
+     useEffect(() => {
     AuthUser.id &&
       firebase
         .firestore()
@@ -45,13 +45,14 @@ const Event = () => {
             setEvents(
               snapshot.docs.map(
                 doc => {
+                  //console.log(doc.data().date);
                   return {
                     eventID: doc.id,
                     eventName: doc.data().name,
                     eventPhone: doc.data().phone,
                     eventEmail: doc.data().email,
                     eventThing: doc.data().thing,
-                    //eventDate: doc.data().date.toDate().toDateString()
+                    eventDate: doc.data().date.toDate().toDateString()
                     //this stopped working and was throwing an error like you got in your week 8 demonstration
                   }
                 }
@@ -71,6 +72,8 @@ const Event = () => {
                 .add({
                     name: inputName,
                     thing: inputThing,
+                    phone:[],
+                    email:[],
                     date: firebase.firestore.Timestamp.fromDate( new Date(inputDate) ),
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     user: AuthUser.id

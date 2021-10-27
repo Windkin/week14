@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
     Flex,
+    HStack,
+    VStack,
     Heading,
     InputGroup,
     InputLeftElement,
@@ -24,6 +26,7 @@ const SingleEvent = ({itemData}) => {
   const [inputDate, setInputDate] = useState(itemData.date);
   const [inputThing, setInputThing] = useState(itemData.thing);
   const [inputPhone, setInputPhone] = useState(itemData.phone);
+  const [inputIg, setInputIg] = useState(itemData.ig);
   const [inputEmail, setInputEmail] = useState(itemData.email);
   const [statusMsg, setStatusMsg] = useState('');
   
@@ -41,6 +44,7 @@ const SingleEvent = ({itemData}) => {
             thing: inputThing,
             phone: inputPhone,
             email: inputEmail,
+            ig: inputIg,
             date: firebase.firestore.Timestamp.fromDate( new Date(inputDate) )
           }
         );
@@ -57,19 +61,32 @@ const SingleEvent = ({itemData}) => {
       <Header 
         email={AuthUser.email} 
         signOut={AuthUser.signOut} />
-      <Flex flexDir="column" maxW={900} align="center" justify="start" minH="100vh" m="auto" px={4} py={3}>
+      <Flex flexDir="column" maxW={900} align="center" justify="center" minH="100vh" m="auto" px={4} py={3}>
+
+        <Heading> {AuthUser.email}</Heading> <br/>
+        <Heading mb={4}>Your Event</Heading>
+
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
             children={<AddIcon color="gray.300" />}
           />
           <Input type="text" value={inputName} onChange={(e) => setInputName(e.target.value)} placeholder="Event Title" />
-          <Input type="text" value={inputThing} onChange={(e) => setInputThing(e.target.value)} placeholder="Homework" />
-          <Input type="text" value={inputPhone} onChange={(e) => setInputPhone(e.target.value)} placeholder="(555) 555-5555" />
-          <Input type="text" value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} placeholder="Email" />
+          <Input type="text" value={inputThing} onChange={(e) => setInputThing(e.target.value)} placeholder="Event N/A" />
+          <Input type="text" value={inputPhone} onChange={(e) => setInputPhone(e.target.value)} placeholder="Phone N/A" />
+        </InputGroup>
+
+          <InputGroup>
+          <InputLeftElement
+            pointerEvents="none"
+            children={<AddIcon color="gray.300" />}
+          />
+
+          <Input type="text" value={inputIg} onChange={(e) => setInputIg(e.target.value)} placeholder="Instagram @ N/A" />
+          <Input type="text" value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} placeholder="Email N/A" />
           <Input type="text" value={inputDate} onChange={(e) => setInputDate(e.target.value)} placeholder="Event Date" />
           <Button
-            ml={2}
+            ml={0}
             onClick={() => sendData()}
           >
             Update
@@ -101,6 +118,7 @@ export const getServerSideProps = withAuthUserTokenSSR(
         name: docData.name,
         thing: docData.thing,
         phone: docData.phone,
+        ig: docData.ig,
         email: docData.email,
         date: docData.date.toDate().toDateString()
       };

@@ -30,6 +30,7 @@ const Event = () => {
     const [inputName, setInputName] = useState('')
     const [inputThing, setInputThing] = useState('')
     const [inputDate, setInputDate] = useState('')
+    const [inputIg, setInputIg] = useState('')
     const [inputPhone, setInputPhone] = useState('')
     const [inputEmail, setInputEmail] = useState('')
     const [events, setEvents] = useState([])
@@ -50,6 +51,7 @@ const Event = () => {
                     eventName: doc.data().name,
                     eventPhone: doc.data().phone,
                     eventEmail: doc.data().email,
+                    eventIg: doc.data().ig,
                     eventThing: doc.data().thing,
                     eventDate: doc.data().date.toDate().toDateString()
                   }
@@ -70,6 +72,8 @@ const Event = () => {
                   name: inputName,
                   phone: inputPhone,
                   email: inputEmail,
+                  ig: inputIg,
+                  thing:[],
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                   date: firebase.firestore.Timestamp.fromDate( new Date() ),
                   user: AuthUser.id
@@ -77,6 +81,7 @@ const Event = () => {
                 .then(console.log('Data was successfully sent to cloud firestore!'));
               setInputName('');
               setInputPhone('');
+              setInputIg('');
               setInputEmail('');
         } catch (error) {
             console.log(error)
@@ -115,6 +120,7 @@ const Event = () => {
                 />
                 <Input type="text" value={inputName} onChange={(e) => setInputName(e.target.value)} placeholder="Name" />
                 <Input type="text" value={inputPhone} onChange={(e) => setInputPhone(e.target.value)} placeholder="(555) 555-5555" />
+                <Input type="text" value={inputIg} onChange={(e) => setInputIg(e.target.value)} placeholder="Instagram @" />
                 <Input type="text" value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} placeholder="Email" />
                 <Button
                     ml={2}
@@ -141,6 +147,7 @@ const Event = () => {
                                   <Link href={'/events/' + item.eventID}>
                                     {item.eventName}&nbsp;
                                     {item.eventPhone}&nbsp;
+                                    {item.eventIg}&nbsp;
                                     {item.eventEmail}&nbsp;
                                     {item.eventThing}&nbsp;
                                     {item.eventDate}

@@ -72,6 +72,7 @@ const Event = () => {
                   thing: [],
                   email: [],
                   phone: [],
+                  ig: [],
                   date: firebase.firestore.Timestamp.fromDate( new Date(inputDate) ),
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                   user: AuthUser.id

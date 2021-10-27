@@ -73,7 +73,7 @@ const Event = () => {
                   phone: inputPhone,
                   email: inputEmail,
                   ig: inputIg,
-                  thing:[],
+                  thing:[""],
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                   date: firebase.firestore.Timestamp.fromDate( new Date() ),
                   user: AuthUser.id

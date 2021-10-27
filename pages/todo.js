@@ -72,9 +72,9 @@ const Event = () => {
                 .add({
                     name: inputName,
                     thing: inputThing,
-                    phone:[],
-                    email:[],
-                    ig: [],
+                    phone:[""],
+                    email:[""],
+                    ig: [""],
                     date: firebase.firestore.Timestamp.fromDate( new Date(inputDate) ),
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     user: AuthUser.id

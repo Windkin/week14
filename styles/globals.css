@@ -19,9 +19,13 @@ nav {
   background: grey;
 }
 main {
-  background: lightgray;
+  background: pink;
 }
 
 body {
   background: lightgoldenrodyellow;
+}
+
+Header {
+  background: lightgrey;
 }

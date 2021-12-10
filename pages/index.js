@@ -6,6 +6,19 @@ import {
 } from 'next-firebase-auth'
 import Header from '../components/Header'
 import DemoPageLinks from '../components/DemoPageLinks'
+import Layout from '../components/layout';
+import Head from 'next/head';
+import Link from 'next/link';
+import { getFood } from '../lib/data';
+
+export async function getStaticProps() {
+  const allData = await getFood();
+  return {
+    props: {
+      allData
+    }
+  }
+}
 
 const styles = {
   content: {
@@ -16,17 +29,27 @@ const styles = {
   },
 }
 
-const Demo = () => {
+const Home = ({allData}) => {
   const AuthUser = useAuthUser()
-  return (
-    <div>
-      <Header email={AuthUser.email} signOut={AuthUser.signOut} />
-    </div>
-  )
+    return (
+      <div>
+        <main>
+          
+          <Header email={AuthUser.email} signOut={AuthUser.signOut} />
+             
+          <Layout home>
+            <h1 className="text-center">Headless CMS-Powered App</h1>
+              <div className="list-group">
+                {allData.map(({ id, name }) => (
+                  <Link key={id} href={`/${id}`}>
+                    <a className="list-group-item list-group-item-action">{name}</a>
+                  </Link>
+                ))}
+              </div>
+          </Layout>
+        </main>
+      </div>
+    )
 }
 
-
-
-export const getServerSideProps = withAuthUserTokenSSR()()
-
-export default withAuthUser()(Demo)
+export default withAuthUser()(Home)

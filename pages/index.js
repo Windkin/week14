@@ -32,12 +32,12 @@ const styles = {
 const Home = ({allData}) => {
   const AuthUser = useAuthUser()
     return (
-      <div>
+      <div className="content">
         <main>
-          
+          <Layout home>
           <Header email={AuthUser.email} signOut={AuthUser.signOut} />
              
-          <Layout home>
+          
             <h1 className="text-center">Headless CMS-Powered App</h1>
               <div className="list-group">
                 {allData.map(({ id, name }) => (

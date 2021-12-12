@@ -10,7 +10,7 @@ export default function Layout( { children, home } ) {
 
       <header>
         <nav className="text-center">
-          <h1>Week 13 Assignment</h1>
+          <h1>Week 14 Assignment</h1>
           
         </nav>
       </header>
@@ -30,3 +30,4 @@ export default function Layout( { children, home } ) {
     </div>
   );
 }
+

@@ -10,15 +10,13 @@ initAuth()
 function MyApp({ Component, pageProps }) {
   // eslint-disable-next-line react/jsx-props-no-spreading
     return (
+    
     <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
-    <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Component {...pageProps} />
-    </>
+    </ChakraProvider>
   )
 }
 
